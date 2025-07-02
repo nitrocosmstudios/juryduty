@@ -83,7 +83,7 @@ class Jury extends GovernmentPower{
             }
         }
         this.jurors.deliberate().then(verdict => {
-            let pittance = (this.minimumWage - 0.70) / this.trial.duration.toHours();
+            let pittance = (this.minimumWage - 0.70) * this.trial.duration.toDays();
             if(verdict.isUnanimous){
                 for(var i=0; i<this.jurors.length; i++){
                     this.pay(this.jurors[i],pittance);
