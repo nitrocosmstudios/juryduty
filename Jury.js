@@ -3,15 +3,18 @@ class Jury extends GovernmentPower{
     // Force citizens to miss work, lose income (and possibly their homes), 
     // and be prisoners in the courthouse for an undetermined amount of time
     constructor(){
+        super();
         this.jurors = [];
-        for(var i=0; i<=12; i++){
+        let jurorCount = 12;
+        let contemptFine = 5000.00;
+        for(var i=1; i<=jurorCount; i++){
             // let citizenID = this.getRandomCitizen();
             let citizenID = this.getRandomCitizenOnWatchList();
             let juror = this.conscriptCitizen(citizenID);
             juror.isSlave = true;
             if(!juror.appear() || juror.refuse()){
                 this.kidnap(juror);
-                juror.money -= 5000.00;
+                juror.money -= contemptFine;
                 juror.clothing = [];
                 this.search(juror);
                 this.brutalize(juror);
@@ -59,6 +62,7 @@ class Jury extends GovernmentPower{
     // The trial. In a criminal trial, the prosecution always has the advantage.
     // In a civil trial, it's the party with more money.
     holdTrial(){
+        let contemptFine = 10000.00;
         while(this.trialInProgress){
             this.judge.reprimand(this.jurors);
             this.judge.threaten(this.jurors);
@@ -67,7 +71,7 @@ class Jury extends GovernmentPower{
                 let juror = this.jurors[i];
                 if(!this.judge.likes(juror)){
                     this.kidnap(juror);
-                    juror.money -= 10000.00;
+                    juror.money -= contemptFine;
                     juror.clothing = [];
                     this.search(juror);
                     this.brutalize(juror);
